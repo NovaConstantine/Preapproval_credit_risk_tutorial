@@ -1,0 +1,74 @@
+{
+  "data_sha256": "4dbeb2880e9a0362bf4be07eb025cc63b694c17b999857a6a015c7f691a2b61f",
+  "seed": 42,
+  "features": [
+    "person_age",
+    "annual_inc",
+    "emp_length",
+    "prior_default",
+    "credit_history",
+    "loan_amnt",
+    "loan_percent_income",
+    "home_ownership",
+    "purpose"
+  ],
+  "excluded": [
+    "int_rate",
+    "grade"
+  ],
+  "ratio_definition": "requested loan_amnt / annual_inc; recomputed",
+  "outer_split": "GroupShuffleSplit(test_size=0.30, random_state=42); identical X rows grouped",
+  "cv": "5-fold StratifiedGroupKFold on training data; preprocessing fitted within each fold",
+  "selection": "maximum mean CV AUC; then min max(FP/RF_FP, FN/RF_FN) on training OOF",
+  "models": {
+    "LR": {
+      "C": 1.0,
+      "class_weight": "balanced",
+      "max_iter": 1000
+    },
+    "RF": {
+      "n_estimators": 200,
+      "max_depth": 10,
+      "min_samples_leaf": 20,
+      "class_weight": "balanced"
+    },
+    "XGBoost": {
+      "n_estimators": 1200,
+      "learning_rate": 0.07415805824053914,
+      "max_depth": 3,
+      "min_child_weight": 4.369944120084866,
+      "subsample": 0.8414902506684043,
+      "colsample_bytree": 0.8702050470142777,
+      "reg_alpha": 0.042260114069201264,
+      "reg_lambda": 6.075700989710291,
+      "gamma": 0.008911743386941978,
+      "scale_pos_weight": 2.588304190635817
+    }
+  },
+  "xgb_cv_auc_mean": 0.9046727853083315,
+  "xgb_fold_auc": [
+    0.9087926967154761,
+    0.9015276200481224,
+    0.9089829562110024,
+    0.899146833428719,
+    0.904913820138338
+  ],
+  "xgb_trial_number": 29,
+  "trials": 48,
+  "thresholds": {
+    "LR": 0.5,
+    "RF": 0.5,
+    "XGBoost": 0.4549999999999999
+  },
+  "sample_sizes": {
+    "train": 22795,
+    "test": 9777
+  },
+  "versions": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.5",
+    "scikit-learn": "1.9.0",
+    "xgboost": "3.4.1",
+    "optuna": "5.0.0"
+  }
+}

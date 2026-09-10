@@ -1,0 +1,13 @@
+variable,role,handling,availability_basis
+person_age,X,retain,Age at application assumed
+annual_inc,X,retain,Annual income known at application assumed
+home_ownership,X,one-hot encode,Housing status at application assumed
+emp_length,X,retain,Employment years at application assumed
+purpose,X,one-hot encode,Declared loan purpose at application assumed
+prior_default,X,retain,Historical default on application-time credit file assumed
+credit_history,X,retain,Credit-history years as of application assumed
+loan_amnt,X,retain,User explicitly confirmed requested amount
+loan_percent_income,X,recompute,Requested loan_amnt divided by annual_inc; stored ratio ignored; not DTI
+int_rate,excluded,drop,Final loan pricing unavailable before pricing
+grade,excluded,drop,Lender-assigned rating excluded before approval and pricing
+default,y,target only,Outcome of the current loan; never an input

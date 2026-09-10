@@ -1,0 +1,17 @@
+[
+  "numeric__person_age",
+  "numeric__annual_inc",
+  "numeric__emp_length",
+  "numeric__prior_default",
+  "numeric__credit_history",
+  "numeric__loan_amnt",
+  "numeric__loan_percent_income",
+  "categorical__home_ownership_OTHER",
+  "categorical__home_ownership_OWN",
+  "categorical__home_ownership_RENT",
+  "categorical__purpose_EDUCATION",
+  "categorical__purpose_HOMEIMPROVEMENT",
+  "categorical__purpose_MEDICAL",
+  "categorical__purpose_PERSONAL",
+  "categorical__purpose_VENTURE"
+]

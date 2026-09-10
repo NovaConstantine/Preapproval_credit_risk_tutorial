@@ -1,0 +1,220 @@
+CELL 3
+Libraries loaded. Prediction time: before approval and pricing.
+
+
+CELL 4
+Dataset shape: (32572, 12)
+['default', 'loan_amnt', 'int_rate', 'grade', 'purpose', 'loan_percent_income', 'person_age', 'annual_inc', 'home_ownership', 'emp_length', 'prior_default', 'credit_history']
+
+
+CELL 5
+First 5 rows:
+   default  loan_amnt  int_rate  ... emp_length prior_default  credit_history
+0        1      15000     16.32  ...        8.0             1               4
+1        1      25000     15.95  ...        3.0             1               6
+2        0       5000      7.49  ...        0.0             0               3
+3        0      10000     15.62  ...       14.0             1               6
+4        0       4500      6.54  ...        4.0             0               6
+
+[5 rows x 12 columns]
+
+
+CELL 6
+Target variable distribution:
+default
+0    25465
+1     7107
+Name: count, dtype: int64
+
+Default rate: 21.8%
+  - Non-defaults: 25,465
+  - Defaults: 7,107
+
+
+CELL 7
+Raw model inputs: ['person_age', 'annual_inc', 'emp_length', 'prior_default', 'credit_history', 'loan_amnt', 'loan_percent_income', 'home_ownership', 'purpose']
+Excluded: int_rate, grade. Target only: default.
+       person_age   annual_inc  ...  loan_amnt  loan_percent_income
+count   32572.000    32572.000  ...   32572.00            32572.000
+mean       27.715    65878.879  ...    9588.10                0.171
+std         6.186    52532.795  ...    6320.42                0.107
+min        20.000     4000.000  ...     500.00                0.001
+25%        23.000    38500.000  ...    5000.00                0.090
+50%        26.000    55000.000  ...    8000.00                0.148
+75%        30.000    79200.000  ...   12200.00                0.229
+max        80.000  2039784.000  ...   35000.00                0.830
+
+[8 rows x 7 columns]
+
+
+CELL 8
+
+
+CELL 9
+Missing values in allowed inputs:
+person_age             0
+annual_inc             0
+emp_length             0
+prior_default          0
+credit_history         0
+loan_amnt              0
+loan_percent_income    0
+home_ownership         0
+purpose                0
+dtype: int64
+
+
+CELL 10
+Train: 22,795; test: 9,777
+Default rates: train=22.13%; test=21.09%
+
+
+CELL 11
+Encoded features (15):
+['numeric__person_age', 'numeric__annual_inc', 'numeric__emp_length', 'numeric__prior_default', 'numeric__credit_history', 'numeric__loan_amnt', 'numeric__loan_percent_income', 'categorical__home_ownership_OTHER', 'categorical__home_ownership_OWN', 'categorical__home_ownership_RENT', 'categorical__purpose_EDUCATION', 'categorical__purpose_HOMEIMPROVEMENT', 'categorical__purpose_MEDICAL', 'categorical__purpose_PERSONAL', 'categorical__purpose_VENTURE']
+
+
+CELL 12
+
+
+CELL 14
+Logistic Regression fitted.
+
+
+CELL 15
+Random Forest fitted.
+
+
+CELL 16
+XGBoost fitted. Training-selected screening threshold: 0.4549999999999999
+
+
+CELL 17
+Predictions generated. Main comparison uses 0.50 for every model.
+
+
+CELL 19
+PNG saved to: J:\uodrive\OneDrive - University of Ottawa\Files\Teaching\ADM 4356 Fall 2026\Machine learning for credit risk\imperial\figures\confusion_matrices_v6_050_600dpi.png
+PDF saved to: J:\uodrive\OneDrive - University of Ottawa\Files\Teaching\ADM 4356 Fall 2026\Machine learning for credit risk\imperial\figures\confusion_matrices_v6_050.pdf
+PNG saved to: J:\uodrive\OneDrive - University of Ottawa\Files\Teaching\ADM 4356 Fall 2026\Machine learning for credit risk\imperial\figures\confusion_matrices_v6_screening_600dpi.png
+PDF saved to: J:\uodrive\OneDrive - University of Ottawa\Files\Teaching\ADM 4356 Fall 2026\Machine learning for credit risk\imperial\figures\confusion_matrices_v6_screening.pdf
+
+
+CELL 20
+LR: TN=5,796, FP=1,919, FN=621, TP=1,441
+FP: non-defaulter flagged as risky. FN: missed default.
+
+
+CELL 22
+Logistic Regression Metrics (at threshold = 0.5):
+==================================================
+Precision: 0.429 (42.9%)
+  → Of loans flagged as risky, 42.9% actually defaulted
+
+Recall:    0.699 (69.9%)
+  → We caught 69.9% of all defaults
+
+F1 Score:  0.532
+
+Accuracy:  0.740 (74.0%)
+  ⚠️ Accuracy can be misleading with imbalanced data!
+
+
+CELL 23
+Model Comparison (at threshold = 0.5):
+============================================================
+
+Logistic Regression:
+              precision    recall  f1-score   support
+
+  No Default       0.90      0.75      0.82      7715
+     Default       0.43      0.70      0.53      2062
+
+    accuracy                           0.74      9777
+   macro avg       0.67      0.73      0.68      9777
+weighted avg       0.80      0.74      0.76      9777
+
+
+Random Forest:
+              precision    recall  f1-score   support
+
+  No Default       0.91      0.88      0.90      7715
+     Default       0.61      0.68      0.64      2062
+
+    accuracy                           0.84      9777
+   macro avg       0.76      0.78      0.77      9777
+weighted avg       0.85      0.84      0.84      9777
+
+
+XGBoost:
+              precision    recall  f1-score   support
+
+  No Default       0.92      0.92      0.92      7715
+     Default       0.70      0.70      0.70      2062
+
+    accuracy                           0.87      9777
+   macro avg       0.81      0.81      0.81      9777
+weighted avg       0.87      0.87      0.87      9777
+
+
+
+CELL 25
+
+💡 AUC Interpretation:
+   AUC = probability that model ranks a random defaulter higher than a random non-defaulter
+   Higher AUC = better ranking ability across all thresholds
+
+
+CELL 29
+Illustrative costs: FP=500, FN=5000; ratio=10
+
+
+CELL 30
+
+
+CELL 31
+Training-selected cost threshold: 0.190
+Selection used training OOF scores only; these selection scores are optimistic.
+
+
+CELL 32
+
+💡 Key insight: Lower threshold catches more defaults (fewer FN)
+   but also denies more good borrowers (more FP)
+
+
+CELL 33
+Test results at thresholds selected before test evaluation:
+                    Policy  threshold   FP  FN  total_cost  precision   recall
+                 Reference      0.500  623 622     3421500   0.698013 0.698351
+Balanced errors (training)      0.455  794 544     3117000   0.656574 0.736178
+ Cost objective (training)      0.190 3018 160     2309000   0.386585 0.922405
+
+
+CELL 37
+
+
+CELL 38
+                     Count  Defaults  Observed_default_rate
+action                                                     
+Further risk review   2312      1518               0.656574
+Standard review       7465       544               0.072873
+
+
+CELL 39
+                     count       sum          mean
+action                                            
+Further risk review   2312  24363975  10538.051471
+Standard review       7465  68664800   9198.231748
+Class-weighted risk scores are not automatically calibrated probabilities of default.
+
+
+CELL 41
+
+
+CELL 43
+                      Model      AUC  Threshold   FP  FN  Error rate
+        Logistic Regression 0.803703      0.500 1919 621    0.259793
+              Random Forest 0.863117      0.500  903 665    0.160376
+             XGBoost (0.50) 0.903643      0.500  623 622    0.127340
+XGBoost (training-selected) 0.903643      0.455  794 544    0.136852
